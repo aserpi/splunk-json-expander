@@ -1,0 +1,79 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - v*.*.*
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+env:
+  extension_slug: ${{ github.event.repository.name }}
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    environment: firefox_store
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract version
+        uses: actions-ecosystem/action-regex-match@9e6c4fb3d5e898f505be7a1fb6e7b0a278f6665b # v2.0.2
+        id: get-version
+        with:
+          regex: '^v(\d+\.\d+\.\d+)$'
+          text: ${{ github.ref_name }}
+      - name: Check version format
+        if: ${{ steps.get-version.outputs.match == '' }}
+        run: |
+          echo "Error: Tag '${{ github.ref_name }}' does not match the strict release format vX.Y.Z"
+          exit 1
+      - name: Checkout tag
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Setup Node.js
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          check-latest: true
+          node-version: "lts/*"
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Extract changelog
+        id: get-changelog
+        run: |
+          echo 'CHANGELOG<<CHANGELOG_EOF' >> $GITHUB_ENV
+          cat CHANGELOG.md | sed "1,/## `echo '${{ steps.get-version.outputs.group1 }}' | sed 's/\./\\\./g'`/d;/## /,\$d" | awk '
+              /[[:graph:]]/ {
+                  p=1  # A non-empty line: set the flag to begin printing lines
+                  for (i=1; i<=n; i++) print ""  # Print the accumulated inner empty lines
+                  n=0
+                  print  # Print the current line
+              }
+              p && /^[[:space:]]*$/ {
+                  n++  # A potentially inner empty line: remember it
+              }
+          ' >> $GITHUB_ENV
+          echo 'CHANGELOG_EOF' >> $GITHUB_ENV
+      - name: Update metadata changelog
+        run: |
+          # Update manifest.json with the browser-compatible version
+          jq ".version.release_notes.en-US = \"$CHANGELOG\"" amo_metadata.json > amo_metadata.tmp.json && mv amo_metadata.tmp.json amo_metadata.json
+      - name: Sign and upload Firefox release
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.WEB_EXT_API_KEY }}
+          WEB_EXT_API_SECRET: ${{ secrets.WEB_EXT_API_SECRET }}
+        run: npm run firefox-publish
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda # v3.0.0
+        with:
+          body: ${{ env.CHANGELOG }}
+          fail_on_unmatched_files: true
+          files: |
+            dist/*.xpi
+            dist/*.zip
+          generate_release_notes: false
+          tag_name: ${{ github.ref_name }}

@@ -1,0 +1,17 @@
+{
+  "categories": {
+    "firefox": ["appearance", "other"]
+  },
+  "homepage": {
+    "en-US": "https://github.com/aserpi/splunk-json-expander"
+  },
+  "requires_payment": false,
+  "slug": "splunk-json-expander",
+  "summary": {
+    "en-US": "Expand deeply nested JSON objects in Splunk with a single click."
+  },
+  "tags": ["splunk"],
+  "version": {
+    "license": "MIT"
+  }
+}
