@@ -1,0 +1,18 @@
+{
+  "description": "Expand deeply nested JSON objects in Splunk with a single click.",
+  "devDependencies": {
+    "prettier": "^3.8.3",
+    "web-ext": "^10.1.0"
+  },
+  "name": "splunk-json-expander",
+  "scripts": {
+    "build": "web-ext --artifacts-dir dist --source-dir 'splunk-json-expander' build --overwrite-dest",
+    "check": "npm run format:check && npm run lint",
+    "firefox-publish": "web-ext --source-dir 'splunk-json-expander' sign --amo-metadata 'amo_metadata.json' --channel=listed",
+    "firefox-sign": "web-ext --source-dir 'splunk-json-expander' sign --amo-metadata 'amo_metadata.json' --channel=unlisted",
+    "format": "prettier --ignore-unknown --write .",
+    "format:check": "prettier --ignore-unknown --check .",
+    "lint": "web-ext --source-dir 'splunk-json-expander' lint"
+  },
+  "version": "1.0.0"
+}
