@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <title>JSON Expander for Splunk</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        max-width: 600px;
+        margin: 20px auto;
+      }
+
+      input {
+        width: 70%;
+        padding: 8px;
+      }
+
+      button {
+        padding: 8px 12px;
+        margin-left: 5px;
+      }
+
+      .settings-box {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #f4f4f4;
+        border-radius: 5px;
+      }
+
+      .settings-box label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #121212;
+          color: #e0e0e0;
+        }
+
+        button {
+          background-color: #333;
+          color: #ffffff;
+          border: 1px solid #555;
+        }
+
+        h2 {
+          text-align: center;
+        }
+
+        input {
+          background-color: #2a2a2a;
+          color: #ffffff;
+          border: 1px solid #444;
+        }
+
+        .settings-box {
+          background-color: #1e1e1e;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h2>JSON Expander for Splunk</h2>
+
+    <div class="settings-box">
+      <label for="maxLevel">Max Expansion Level (0 for all):</label>
+      <input
+        type="number"
+        id="maxLevel"
+        min="0"
+        value="3"
+        style="width: 60px"
+      />
+    </div>
+
+    <script type="module" src="../scripts/options.js"></script>
+  </body>
+</html>
