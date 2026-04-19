@@ -58,7 +58,7 @@ jobs:
       - name: Update metadata changelog
         run: |
           # Update manifest.json with the browser-compatible version
-          jq ".version.release_notes.en-US = \"$CHANGELOG\"" amo_metadata.json > amo_metadata.tmp.json && mv amo_metadata.tmp.json amo_metadata.json
+          jq --arg notes "$CHANGELOG" '.version.release_notes["en-US"] = $notes' amo_metadata.json > amo_metadata.tmp.json && mv amo_metadata.tmp.json amo_metadata.json
       - name: Sign and upload Firefox release
         env:
           WEB_EXT_API_KEY: ${{ secrets.WEB_EXT_API_KEY }}
