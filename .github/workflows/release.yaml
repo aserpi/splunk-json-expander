@@ -9,9 +9,6 @@ concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
 
-env:
-  extension_slug: ${{ github.event.repository.name }}
-
 permissions:
   contents: write
 
