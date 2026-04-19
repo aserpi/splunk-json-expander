@@ -29,8 +29,7 @@ You can change the default expansion depth via the extension options:
    - Firefox:
      1. Right-click the extension icon
      2. Click `Manage extension`
-     3. Click on the three dots in the top right corner
-     4. Click `Options`
+     3. Go to the `Options` tab
 2. Enter your preferred expansion level (use `0` for infinite depth).
 
 ## Development
