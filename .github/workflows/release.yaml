@@ -73,4 +73,4 @@ jobs:
             dist/*.xpi
             dist/*.zip
           generate_release_notes: false
-          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
