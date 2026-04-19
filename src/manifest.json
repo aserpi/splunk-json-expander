@@ -25,7 +25,7 @@
   "name": "JSON Expander for Splunk",
   "options_ui": {
     "page": "html/options.html",
-    "open_in_tab": true
+    "open_in_tab": false
   },
   "permissions": ["activeTab", "scripting", "storage"],
   "version": "1.0.0"
