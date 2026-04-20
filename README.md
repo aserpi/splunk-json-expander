@@ -20,11 +20,13 @@ This extension automates the process so you can focus on analysis.
 ### Automatic Expansion
 
 #### Firefox
+
 1. Go to the extension **Options**.
 2. Add your Splunk domain (e.g., `https://splunk.company.com`) to the **Allowed domains** list.
 3. Check the **Enable** box under **Automatic expansion**.
 
 #### Chrome
+
 1. Right-click the extension icon in your toolbar.
 2. Select **"This can read and change site data"** > **"On all sites"** (or specify your Splunk domain).
 3. Go to extension **Options** and check the **Enable** box under **Automatic expansion**.

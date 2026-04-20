@@ -10,7 +10,7 @@ const newDomainInput = document.getElementById("newDomain");
 
 autoExpandInput.addEventListener("change", async () => {
   console.debug(
-      `[Splunk Json Expander] Setting autoExpand to ${autoExpandInput.checked}`,
+    `[Splunk Json Expander] Setting autoExpand to ${autoExpandInput.checked}`,
   );
   await api.storage.sync.set({ autoExpand: autoExpandInput.checked });
 });
