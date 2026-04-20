@@ -1,163 +1,412 @@
-body {
-  color-scheme: light dark;
-  /* Chrome/Material Design Light Theme Default */
-  --bg-color: #ffffff;
-  --text-color: #202124;
-  --label-color: #5f6368;
-  --input-bg: #ffffff;
-  --input-border: #dadce0;
-  --input-border-focus: #1a73e8;
-  --helper-color: #5f6368;
-  --font-family: Roboto, "Segoe UI", Arial, sans-serif;
+/* Global Shared Styles */
+:root {
+  --border-radius: 4px;
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    /* Chrome/Material Design Dark Theme */
-    --bg-color: #202124;
-    --text-color: #e8eaed;
-    --label-color: #9aa0a6;
-    --input-bg: #202124;
-    --input-border: #5f6368;
-    --input-border-focus: #8ab4f8;
-    --helper-color: #9aa0a6;
-  }
+li {
+  list-style: none;
 }
 
-/* Override with Acorn Design System specifically for Firefox */
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+label {
+  display: flex;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+button {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+input[type="text"],
+input[type="number"] {
+  box-sizing: border-box;
+  outline: none;
+}
+
+/* Firefox style (Native Photon/Proton) */
 @supports (-moz-appearance: none) {
   body {
-    /* Acorn Light Theme */
-    --bg-color: #ffffff;
-    --text-color: #15141a;
-    --label-color: #15141a;
-    --input-bg: #f9f9fb;
-    --input-border: #8f8f9d;
-    --input-border-focus: #0060df;
-    --helper-color: #5a5b5e;
-    --font-family:
-      -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, "Helvetica Neue",
-      sans-serif;
+    --grey10: #e7e7e7;
+    font-family:
+      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+      Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background: #fff;
+    color: rgb(74, 74, 79);
+    font-size: 13px;
+    overflow: hidden;
+  }
+
+  label {
+    font-size: 14px;
+  }
+
+  label > span {
+    padding-inline-end: 4px;
+  }
+
+  .settings-group:not(:last-child) {
+    margin-block-end: 16px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    padding-block-end: 1rem;
+    padding-block-start: 1rem;
+  }
+
+  .settings-group p {
+    margin-inline-start: 24px;
+    margin-block: 4px 8px;
+  }
+
+  input[type="checkbox"] {
+    margin-inline: 0 8px;
+    margin-block: 1px auto;
+  }
+
+  button {
+    margin-inline: 0 auto;
+    background: var(--grey10);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+  }
+
+  .bold {
+    font-weight: 600;
+  }
+
+  .auto-expander-options {
+    margin-block: 0 2rem;
+    padding-block-end: 1rem;
+    border-block-end: 1px solid var(--grey10);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  h3.auto-expander-options-title {
+    margin-block-start: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .auto-expander-options-title-text {
+    display: flex;
+    align-items: center;
+  }
+
+  .auto-expander-options-title::before,
+  .auto-expander-options-title::after {
+    background-color: var(--grey10);
+    content: "";
+    height: 1px;
+    flex: 1 1 0%;
+  }
+
+  h3.auto-expander-options-title::before {
+    margin-inline-end: 2rem;
+    margin-inline-start: -50%;
+  }
+
+  h3.auto-expander-options-title::after {
+    margin-inline-start: 2rem;
+    margin-inline-end: -50%;
+  }
+
+  body {
+    --border-color: #5f6368;
+    --focus-color: #0060df;
+  }
+
+  input[type="checkbox"] {
+    accent-color: var(--focus-color);
+  }
+
+  input[type="number"] {
+    appearance: textfield;
+    padding: 8px 0 !important;
+    text-align: center;
+    width: 3em;
+  }
+
+  input[type="number"],
+  input[type="text"] {
+    background-color: var(--grey10);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: rgb(74, 74, 79);
+    padding: 8px 12px;
+    transition:
+      border 0.2s,
+      box-shadow 0.2s;
+  }
+
+  input[type="text"] {
+    max-width: 70%;
+    width: 100%;
+  }
+
+  input[type="number"]:focus,
+  input[type="text"]:focus {
+    border: 1px solid var(--focus-color);
+  }
+
+  label:not(:has(span)) {
+    margin: 0 0 4px 24px;
+  }
+
+  li:not(:first-child) {
+    margin-top: 4px;
+  }
+
+  .helper-text {
+    font-style: italic;
+  }
+
+  .general-options .settings-group label {
+    justify-content: space-between;
+    max-inline-size: calc(70% + 23px);
+  }
+
+  .general-options .helper-text {
+    margin-inline-start: 0;
+  }
+
+  #addDomain {
+    margin-right: 2px;
+    padding: 7px 2px 7px 3px;
   }
 
   @media (prefers-color-scheme: dark) {
     body {
-      /* Acorn Dark Theme */
-      --bg-color: #1c1b22;
-      --text-color: #fbfbfe;
-      --label-color: #fbfbfe;
-      --input-bg: #2b2a33;
-      --input-border: #8f8f9d;
-      --input-border-focus: #00ddff;
-      --helper-color: #cfcfd8;
+      background: #23212a;
+      color: #fff;
+      --border-color: #8f8f9d;
+      --focus-color: #00ddff;
+    }
+
+    p {
+      color: rgb(177, 177, 179);
+    }
+
+    button {
+      background-color: #2b2a33;
+      color: #fff;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      background-color: #2b2a33;
+      color: #fff;
     }
   }
 }
 
-body {
-  font-family: var(--font-family);
-  background: var(--bg-color);
-  color: var(--text-color);
-  font-size: 14px;
-  margin: 0;
-  padding: 16px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.settings-group {
-  margin-bottom: 16px;
-}
-
-.input-container {
-  position: relative;
-  margin-top: 12px;
-  margin-bottom: 8px;
-}
-
-label {
-  display: block;
-  font-size: 12px;
-  color: var(--label-color);
-  margin-bottom: 6px;
-  font-weight: 500;
-}
-
-input[type="number"] {
-  width: 100%;
-  max-width: 200px;
-  box-sizing: border-box;
-  padding: 8px 12px;
-  border: 1px solid var(--input-border);
-  border-radius: 4px;
-  font-size: 14px;
-  background-color: var(--input-bg);
-  color: var(--text-color);
-  transition:
-    border 0.2s,
-    box-shadow 0.2s;
-}
-
-input[type="number"]:focus {
-  outline: none;
-  border: 2px solid var(--input-border-focus);
-  padding: 7px 11px; /* Compensate for the thicker 2px border */
-}
-
-/* Style the Chrome/WebKit spin buttons (arrows) */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.2s ease-in-out;
-}
-
-input[type="number"]::-webkit-inner-spin-button:hover,
-input[type="number"]::-webkit-outer-spin-button:hover {
-  opacity: 1;
-}
-
-.helper-text {
-  font-size: 12px;
-  color: var(--helper-color);
-  margin: 0;
-}
-
-/* Structural Overrides for Firefox (Acorn) */
-@supports (-moz-appearance: none) {
-  body {
-    font-size: 13px;
+/* Material Design style for Chromium */
+@supports not (-moz-appearance: none) {
+  :root {
+    --md-primary: #1a73e8;
+    --md-primary-variant: #174ea6;
+    --md-on-primary: #ffffff;
+    --md-surface: #ffffff;
+    --md-on-surface: rgba(0, 0, 0, 0.87);
+    --md-on-surface-medium: rgba(0, 0, 0, 0.6);
+    --md-outline: rgba(0, 0, 0, 0.12);
+    --md-input-idle: rgba(0, 0, 0, 0.42);
   }
-  .input-container {
+
+  body {
+    width: 360px;
+    font-family: Roboto, "Segoe UI", Tahoma, sans-serif;
+    background-color: var(--md-surface);
+    color: var(--md-on-surface);
+    font-size: 13px;
+    margin: 0;
+    padding: 16px;
+    line-height: 1.4;
+    overflow-x: hidden;
+  }
+
+  .settings-group {
+    margin-bottom: 24px;
+  }
+
+  .settings-group label {
+    font-weight: 500;
+    min-height: 24px;
+  }
+
+  .bold {
+    font-weight: 500;
+  }
+
+  .helper-text {
+    font-size: 11px;
+    color: var(--md-on-surface-medium);
+    margin: 4px 0 0 0;
+    font-style: normal;
+    line-height: 1.4;
+  }
+
+  .general-options .helper-text {
+    margin-left: 0;
+    margin-top: 8px;
+  }
+
+  h3.auto-expander-options-title {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--md-on-surface-medium);
+    margin: 32px 0 20px 0;
     display: flex;
     align-items: center;
-    margin-top: 0;
-    margin-bottom: 4px;
+    text-align: center;
   }
-  label {
-    display: inline-block;
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 0;
-    margin-right: 12px;
+
+  h3.auto-expander-options-title::before,
+  h3.auto-expander-options-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: var(--md-outline);
   }
+
+  h3.auto-expander-options-title::before {
+    margin-right: 16px;
+  }
+
+  h3.auto-expander-options-title::after {
+    margin-left: 16px;
+  }
+
+  input[type="text"],
   input[type="number"] {
-    width: auto;
-    max-width: none;
-    padding: 4px 8px;
+    border: none;
+    border-bottom: 1px solid var(--md-input-idle);
+    background-color: transparent;
+    padding: 4px 0;
     font-size: 13px;
+    color: var(--md-on-surface);
+    transition: border-bottom-color 0.2s;
+    line-height: 1;
   }
+
+  .settings-group div {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  input[type="text"] {
+    flex: 1;
+  }
+
+  input[type="number"] {
+    width: 48px;
+    text-align: center;
+    margin-left: auto;
+  }
+
+  input[type="text"]:focus,
   input[type="number"]:focus {
-    border: 1px solid var(--input-border-focus);
-    padding: 4px 8px; /* Reset material padding compensation */
-    box-shadow: 0 0 0 2px rgba(0, 96, 223, 0.3);
+    border-bottom: 2px solid var(--md-primary);
+    padding-bottom: 3px;
   }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .general-options .settings-group label {
+    justify-content: space-between;
+    width: 100%;
+    align-items: flex-end;
+  }
+
+  button {
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    border: none;
+    border-radius: 4px;
+    padding: 0 12px;
+    height: 24px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.12),
+      0 1px 2px rgba(0, 0, 0, 0.24);
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  button:hover {
+    background-color: var(--md-primary-variant);
+    box-shadow:
+      0 3px 6px rgba(0, 0, 0, 0.16),
+      0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+
+  #addDomain {
+    padding: 0;
+    width: 24px;
+    min-width: 24px;
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+  }
+
+  input[type="checkbox"] {
+    accent-color: var(--md-primary);
+    margin-right: 6px;
+    margin-top: 0;
+    margin-bottom: 0;
+    transform: translateY(-1px);
+  }
+
+  ul input[type="checkbox"] {
+    transform: translateY(-2px);
+  }
+
+  li {
+    margin-bottom: 8px;
+  }
+
+  li label {
+    cursor: pointer;
+  }
+
   @media (prefers-color-scheme: dark) {
-    input[type="number"]:focus {
-      box-shadow: 0 0 0 2px rgba(0, 221, 255, 0.3);
+    :root {
+      --md-primary: #bb86fc;
+      --md-primary-variant: #a672e8;
+      --md-on-primary: #000000;
+      --md-surface: #3b3b3b;
+      --md-on-surface: rgba(255, 255, 255, 0.87);
+      --md-on-surface-medium: rgba(255, 255, 255, 0.6);
+      --md-outline: rgba(255, 255, 255, 0.2);
+      --md-input-idle: rgba(255, 255, 255, 0.42);
     }
   }
 }
