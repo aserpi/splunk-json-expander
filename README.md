@@ -2,17 +2,27 @@
 
 A browser extension for Chrome and Firefox that instantly expands JSON objects in Splunk search results.
 
-Splunk's default view collapses nested JSON data, requiring tedious manual clicks to inspect your logs. This extension automates the process with a single click so you can focus on analysis.
+Splunk's default view collapses nested JSON data, requiring tedious manual clicks to inspect your logs. This extension automates the process so you can focus on analysis.
 
 ## Features
 
-- **One-Click Expansion**: Click the extension icon to instantly expand JSON results on the active page.
+- **Automatic Expansion**: Enable auto-expand to have JSON results expand automatically as soon as they are loaded.
+- **One-Click Expansion**: Click the extension icon to instantly expand JSON results on any Splunk page.
 - **Customizable Depth**: Configure how many levels deep the JSON should be expanded (defaults to 3).
 - **Expand All**: Set the depth to `0` to fully expand all nested JSON objects.
-- **Privacy First**: It only runs when and where you explicitly click the icon.
+- **Domain Management**: Add your own Splunk domains to the allowed list to enable automatic features and persistence.
 - **Cross-Browser**: Built with Manifest V3 for modern Chrome and Firefox compatibility.
 
 ## Usage
+
+### Automatic Expansion
+
+1. Go to the extension **Options**.
+2. Add your Splunk domain (e.g., `https://splunk.company.com`) to the **Allowed domains** list.
+3. Check the **Enable** box under **Automatic expansion**.
+4. Splunk results will now expand automatically whenever you run a search.
+
+### Manual Trigger
 
 1. Open your Splunk search results.
 2. Click the **JSON Expander for Splunk** icon in your browser toolbar.
@@ -20,17 +30,14 @@ Splunk's default view collapses nested JSON data, requiring tedious manual click
 
 ## Configuration
 
-You can change the default expansion depth via the extension options:
+You can customize the extension behavior via the options page:
 
 1. Open the extension's option page:
-   - Chrome:
-     1. Right-click the extension icon
-        Click `Options`
-   - Firefox:
-     1. Right-click the extension icon
-     2. Click `Manage extension`
-     3. Go to the `Options` tab
-2. Enter your preferred expansion level (use `0` for infinite depth).
+   - **Chrome**: Right-click the extension icon and select `Options`.
+   - **Firefox**: Right-click the extension icon, select `Manage extension`, and go to the `Options` tab.
+2. **Expansion level**: Set the number of levels to expand (use `0` for all).
+3. **Automatic expansion**: Toggle whether the extension should run automatically on allowed domains.
+4. **Allowed domains**: Add or remove specific Splunk domains where the extension is permitted to run.
 
 ## Development
 

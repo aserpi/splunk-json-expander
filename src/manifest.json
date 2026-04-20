@@ -16,6 +16,12 @@
       "strict_min_version": "142.0"
     }
   },
+  "content_scripts": [
+    {
+      "js": ["js/content.js"],
+      "matches": ["*://*/*/search*"]
+    }
+  ],
   "description": "Expand deeply nested JSON objects in Splunk with a single click.",
   "icons": {
     "48": "img/icon-48.png",
@@ -23,6 +29,7 @@
   },
   "manifest_version": 3,
   "name": "JSON Expander for Splunk",
+  "optional_host_permissions": ["*://*/*"],
   "options_ui": {
     "page": "html/options.html",
     "open_in_tab": false
