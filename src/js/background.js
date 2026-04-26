@@ -12,10 +12,10 @@ async function inject(tabId) {
   );
   try {
     await api.scripting.executeScript({
-      target: { tabId: tabId },
       func: () => {
         window.__splunkJsonExpanderManualTrigger = true;
       },
+      target: { tabId: tabId },
     });
     await api.scripting.executeScript({
       files: ["js/content.js"],

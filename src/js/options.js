@@ -8,6 +8,13 @@ const domainList = document.getElementById("domainList");
 const maxLevelInput = document.getElementById("maxLevel");
 const newDomainInput = document.getElementById("newDomain");
 
+autoExpandInput.addEventListener("change", async () => {
+  console.debug(
+      `[Splunk Json Expander] Setting autoExpand to ${autoExpandInput.checked}`,
+  );
+  await api.storage.sync.set({ autoExpand: autoExpandInput.checked });
+});
+
 maxLevelInput.addEventListener("change", async () => {
   let val = parseInt(maxLevelInput.value, 10);
   if (isNaN(val) || val < 0) {
@@ -16,13 +23,6 @@ maxLevelInput.addEventListener("change", async () => {
   }
   console.debug(`[Splunk Json Expander] Setting expansionLevel to ${val}`);
   await api.storage.sync.set({ expansionLevel: val });
-});
-
-autoExpandInput.addEventListener("change", async () => {
-  console.debug(
-    `[Splunk Json Expander] Setting autoExpand to ${autoExpandInput.checked}`,
-  );
-  await api.storage.sync.set({ autoExpand: autoExpandInput.checked });
 });
 
 /**
@@ -35,8 +35,8 @@ function processDomain(domain) {
   let input = domain.trim();
   if (input.length === 0) return null;
 
-  let protocol = "*";
   let host = input;
+  let protocol = "*";
 
   if (input.includes("://")) {
     const parts = input.split("://");
