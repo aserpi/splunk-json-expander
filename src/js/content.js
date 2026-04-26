@@ -40,7 +40,7 @@
     const visibleExpanders = [];
     for (const el of expanders) {
       // Revert to offsetWidth/Height check as Splunk's dynamic DOM might not play well with checkVisibility
-      if (el.offsetWidth > 0 || el.offsetHeight > 0) {
+      if (el.offsetHeight > 0 || el.offsetWidth > 0) {
         const depth = getDepth(el);
         if (maxDepth === undefined || depth <= maxDepth) {
           visibleExpanders.push({ el, depth });
