@@ -366,17 +366,6 @@ input[type="number"] {
       0 3px 6px rgba(0, 0, 0, 0.23);
   }
 
-  #addDomain {
-    padding: 0;
-    width: 24px;
-    min-width: 24px;
-    font-size: 16px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 0;
-  }
-
   input[type="checkbox"] {
     accent-color: var(--md-primary);
     margin-right: 6px;
@@ -385,16 +374,8 @@ input[type="number"] {
     transform: translateY(-1px);
   }
 
-  ul input[type="checkbox"] {
-    transform: translateY(-2px);
-  }
-
-  li {
-    margin-bottom: 8px;
-  }
-
-  li label {
-    cursor: pointer;
+  .firefox-only {
+    display: none !important;
   }
 
   @media (prefers-color-scheme: dark) {
