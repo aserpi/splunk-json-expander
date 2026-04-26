@@ -1,5 +1,7 @@
 import { api } from "./api.js";
 
+const isFirefox = navigator.userAgent.includes("Firefox");
+
 const addDomainBtn = document.getElementById("addDomain");
 const autoExpandInput = document.getElementById("autoExpand");
 const domainList = document.getElementById("domainList");
@@ -54,6 +56,8 @@ function processDomain(domain) {
  * Renders the list of currently granted domain permissions.
  */
 async function renderDomainList() {
+  if (!isFirefox) return;
+
   domainList.innerHTML = ""; // Clear current list
   const permissions = await api.permissions.getAll();
   console.debug("[Splunk Json Expander] Fetched permissions:", permissions);
@@ -119,6 +123,8 @@ async function renderDomainList() {
 }
 
 async function handleAddDomain() {
+  if (!isFirefox) return;
+
   const processedDomain = processDomain(newDomainInput.value);
   console.debug(`[Splunk Json Expander] Processed domain: ${processedDomain}`);
   if (!processedDomain) {
@@ -149,13 +155,15 @@ async function handleAddDomain() {
   }
 }
 
-addDomainBtn.addEventListener("click", handleAddDomain);
-newDomainInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    handleAddDomain();
-  }
-});
+if (isFirefox) {
+  addDomainBtn.addEventListener("click", handleAddDomain);
+  newDomainInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleAddDomain();
+    }
+  });
+}
 
 // Initial load
 (async () => {
@@ -169,8 +177,10 @@ newDomainInput.addEventListener("keydown", (event) => {
   autoExpandInput.checked = autoExpand;
   maxLevelInput.value = expansionLevel;
 
-  api.permissions.onAdded.addListener(renderDomainList);
-  api.permissions.onRemoved.addListener(renderDomainList);
+  if (isFirefox) {
+    api.permissions.onAdded.addListener(renderDomainList);
+    api.permissions.onRemoved.addListener(renderDomainList);
 
-  await renderDomainList();
+    await renderDomainList();
+  }
 })();
