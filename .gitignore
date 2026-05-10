@@ -3,6 +3,10 @@
 *.iml
 
 
+### Firefox ###
+src/.amo-upload-uuid
+
+
 ### Node ###
 # Logs
 logs
