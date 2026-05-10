@@ -14,5 +14,5 @@
     "format:check": "prettier --ignore-unknown --check .",
     "lint": "web-ext --source-dir 'src' lint"
   },
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

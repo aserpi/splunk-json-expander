@@ -6,14 +6,55 @@
   </head>
   <body>
     <form>
-      <div class="settings-group">
-        <div class="input-container">
-          <label for="maxLevel">Max expansion level</label>
-          <input type="number" id="maxLevel" />
+      <div class="general-options">
+        <div class="settings-group">
+          <label for="maxLevel">
+            <span class="bold">Expansion level</span>
+            <input type="number" id="maxLevel" min="0" max="25" />
+          </label>
+          <p class="helper-text">
+            The number of nested levels to be expanded in each pass (0 for all).
+          </p>
         </div>
-        <p class="helper-text">
-          The number of nested levels to be expanded (0 for all).
-        </p>
+      </div>
+
+      <div class="auto-expander-options">
+        <h3 class="auto-expander-options-title">
+          <span class="auto-expander-options-title-text">
+            Automatic expansion
+          </span>
+        </h3>
+
+        <div class="settings-group">
+          <label for="autoExpand">
+            <input type="checkbox" id="autoExpand" />
+            <span class="bold">Enable</span>
+          </label>
+          <p class="helper-text">
+            Automatically expand JSON results when search results are loaded.
+          </p>
+        </div>
+
+        <div class="settings-group firefox-only">
+          <label class="bold" for="newDomain">Add a domain</label>
+          <div>
+            <button type="button" id="addDomain">+</button>
+            <input
+              type="text"
+              id="newDomain"
+              placeholder="https://splunk.company.com"
+            />
+          </div>
+          <p class="helper-text">Add domains where the extension can run.</p>
+        </div>
+
+        <div class="settings-group firefox-only">
+          <label class="bold">Allowed domains</label>
+          <ul id="domainList"></ul>
+          <p class="helper-text">
+            Unchecking a domain will remove its permission.
+          </p>
+        </div>
       </div>
     </form>
 
