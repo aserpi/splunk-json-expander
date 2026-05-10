@@ -14,6 +14,13 @@
       },
       "id": "splunk-json-expander@aserpi.it",
       "strict_min_version": "142.0"
+    },
+    "gecko_android": {
+      "data_collection_permissions": {
+        "required": ["none"]
+      },
+      "id": "splunk-json-expander@aserpi.it",
+      "strict_min_version": "142.0"
     }
   },
   "description": "Expand deeply nested JSON objects in Splunk with a single click.",
