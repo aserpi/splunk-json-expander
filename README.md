@@ -2,7 +2,8 @@
 
 A browser extension for Chrome and Firefox that instantly expands JSON objects in Splunk search results.
 
-Splunk's default view collapses nested JSON data, requiring tedious manual clicks to inspect your logs. This extension automates the process so you can focus on analysis.
+Splunk's default view collapses nested JSON data, requiring tedious manual clicks to inspect your logs.
+This extension automates the process so you can focus on analysis.
 
 ## Features
 
@@ -36,7 +37,7 @@ Splunk's default view collapses nested JSON data, requiring tedious manual click
 
 ## Configuration
 
-You can customize the extension behavior via the options page:
+You can customize the extension behavior in the options page:
 
 1. Open the extension's option page:
    - **Chrome**: Right-click the extension icon and select `Options`.
@@ -69,7 +70,7 @@ npm run format
 
 ### Check
 
-To verify code formatting and run `web-ext lint` (recommended before opening a pull request):
+To verify code formatting and extension correctness run `npm run check` (recommended before opening a pull request):
 
 ```bash
 npm run check
