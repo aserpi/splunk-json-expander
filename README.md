@@ -5,6 +5,9 @@ A browser extension for Chrome and Firefox that instantly expands JSON objects i
 Splunk's default view collapses nested JSON data, requiring tedious manual clicks to inspect your logs.
 This extension automates the process so you can focus on analysis.
 
+[link-firefox]: https://addons.mozilla.org/it/firefox/addon/splunk-json-expander/ 'Version published on Mozilla Add-ons'
+[<img src="https://raw.githubusercontent.com/alrra/browser-logos/90fdf03c/src/firefox/firefox.svg" width="48" alt="Firefox" valign="middle">][link-firefox] [<img valign="middle" src="https://img.shields.io/amo/v/splunk-json-expander.svg?label=%20">][link-firefox]&emsp;Download it at [addons.mozilla.org][link-firefox].
+
 ## Features
 
 - **Automatic Expansion**: Enable auto-expand to have JSON results expand automatically as soon as they are loaded.
