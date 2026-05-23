@@ -2,7 +2,7 @@
   "description": "Expand deeply nested JSON objects in Splunk with a single click.",
   "devDependencies": {
     "prettier": "^3.8.3",
-    "web-ext": "^10.1.0"
+    "web-ext": "^10.2.0"
   },
   "name": "splunk-json-expander",
   "scripts": {
