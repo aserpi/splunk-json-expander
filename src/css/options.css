@@ -3,20 +3,7 @@
   --border-radius: 4px;
 }
 
-button {
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-input[type="checkbox"] {
-  cursor: pointer;
-  flex-shrink: 0;
-  height: 16px;
-  width: 16px;
-}
-
-input[type="number"],
-input[type="text"] {
+input[type="number"] {
   box-sizing: border-box;
   outline: none;
 }
@@ -24,15 +11,6 @@ input[type="text"] {
 label {
   align-items: center;
   display: flex;
-}
-
-li {
-  list-style: none;
-}
-
-ul {
-  margin: 0;
-  padding: 0;
 }
 
 /* Material Design style for Chromium */
@@ -60,87 +38,18 @@ ul {
     width: 360px;
   }
 
-  button {
-    background-color: var(--md-primary);
-    border: none;
-    border-radius: 4px;
-    box-shadow:
-      0 1px 3px rgba(0, 0, 0, 0.12),
-      0 1px 2px rgba(0, 0, 0, 0.24);
-    color: var(--md-on-primary);
-    flex-shrink: 0;
-    font-size: 12px;
-    font-weight: 500;
-    height: 24px;
-    letter-spacing: 0.04em;
-    margin-right: 12px;
-    padding: 0 12px;
-    text-transform: uppercase;
-  }
-
-  button:hover {
-    background-color: var(--md-primary-variant);
-    box-shadow:
-      0 3px 6px rgba(0, 0, 0, 0.16),
-      0 3px 6px rgba(0, 0, 0, 0.23);
-  }
-
-  h3.auto-expander-options-title {
-    align-items: center;
-    color: var(--md-on-surface-medium);
-    display: flex;
-    letter-spacing: 0.1em;
-    font-size: 11px;
-    font-weight: 500;
-    margin: 32px 0 20px 0;
-    text-align: center;
-    text-transform: uppercase;
-  }
-
-  h3.auto-expander-options-title::after,
-  h3.auto-expander-options-title::before {
-    background-color: var(--md-outline);
-    content: "";
-    flex: 1;
-    height: 1px;
-  }
-
-  h3.auto-expander-options-title::after {
-    margin-left: 16px;
-  }
-
-  h3.auto-expander-options-title::before {
-    margin-right: 16px;
-  }
-
-  input[type="checkbox"] {
-    accent-color: var(--md-primary);
-    margin-bottom: 0;
-    margin-right: 6px;
-    margin-top: 0;
-    transform: translateY(-1px);
-  }
-
-  input[type="number"],
-  input[type="text"] {
+  input[type="number"] {
     background-color: transparent;
     border: none;
     border-bottom: 1px solid var(--md-input-idle);
     color: var(--md-on-surface);
     font-size: 13px;
     line-height: 1;
-    padding: 4px 0;
-    transition: border-bottom-color 0.2s;
-  }
-
-  input[type="number"] {
     margin-left: auto;
+    padding: 4px 0;
     text-align: center;
+    transition: border-bottom-color 0.2s;
     width: 48px;
-  }
-
-  input[type="text"] {
-    flex: 1;
   }
 
   input[type="number"]::-webkit-inner-spin-button,
@@ -149,18 +58,13 @@ ul {
     margin: 0;
   }
 
-  input[type="number"]:focus,
-  input[type="text"]:focus {
+  input[type="number"]:focus {
     border-bottom: 2px solid var(--md-primary);
     padding-bottom: 3px;
   }
 
   .bold {
     font-weight: 500;
-  }
-
-  .firefox-only {
-    display: none !important;
   }
 
   .general-options .helper-text {
@@ -184,12 +88,6 @@ ul {
 
   .settings-group {
     margin-bottom: 24px;
-  }
-
-  .settings-group div {
-    align-items: center;
-    display: flex;
-    margin-top: 8px;
   }
 
   .settings-group label {
@@ -229,13 +127,6 @@ ul {
     overflow: hidden;
   }
 
-  button {
-    background: var(--grey10);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    margin-inline: 0 auto;
-  }
-
   form {
     display: flex;
     flex-direction: column;
@@ -243,31 +134,7 @@ ul {
     padding-block-start: 1rem;
   }
 
-  h3.auto-expander-options-title {
-    align-items: center;
-    display: flex;
-    margin-block-start: 0;
-    position: relative;
-  }
-
-  h3.auto-expander-options-title::after {
-    margin-inline-end: -50%;
-    margin-inline-start: 2rem;
-  }
-
-  h3.auto-expander-options-title::before {
-    margin-inline-end: 2rem;
-    margin-inline-start: -50%;
-  }
-
-  input[type="checkbox"] {
-    accent-color: var(--focus-color);
-    margin-block: 1px auto;
-    margin-inline: 0 8px;
-  }
-
-  input[type="number"],
-  input[type="text"] {
+  input[type="number"] {
     background-color: var(--grey10);
     border: 1px solid var(--border-color);
     border-radius: 4px;
@@ -278,8 +145,7 @@ ul {
       box-shadow 0.2s;
   }
 
-  input[type="number"]:focus,
-  input[type="text"]:focus {
+  input[type="number"]:focus {
     border: 1px solid var(--focus-color);
   }
 
@@ -290,47 +156,12 @@ ul {
     width: 3em;
   }
 
-  input[type="text"] {
-    max-width: 70%;
-    width: 100%;
-  }
-
   label {
     font-size: 14px;
   }
 
-  label:not(:has(span)) {
-    margin: 0 0 4px 24px;
-  }
-
   label > span {
     padding-inline-end: 4px;
-  }
-
-  li:not(:first-child) {
-    margin-top: 4px;
-  }
-
-  .auto-expander-options {
-    border-block-end: 1px solid var(--grey10);
-    display: flex;
-    flex-direction: column;
-    margin-block: 0 2rem;
-    overflow: hidden;
-    padding-block-end: 1rem;
-  }
-
-  .auto-expander-options-title::before,
-  .auto-expander-options-title::after {
-    background-color: var(--grey10);
-    content: "";
-    flex: 1 1 0%;
-    height: 1px;
-  }
-
-  .auto-expander-options-title-text {
-    align-items: center;
-    display: flex;
   }
 
   .bold {
@@ -350,18 +181,9 @@ ul {
     font-style: italic;
   }
 
-  .settings-group:not(:last-child) {
-    margin-block-end: 16px;
-  }
-
   .settings-group p {
     margin-block: 4px 8px;
     margin-inline-start: 24px;
-  }
-
-  #addDomain {
-    margin-right: 2px;
-    padding: 7px 2px 7px 3px;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -375,13 +197,7 @@ ul {
       color: #fff;
     }
 
-    button {
-      background-color: #2b2a33;
-      color: #fff;
-    }
-
-    input[type="number"],
-    input[type="text"] {
+    input[type="number"] {
       background-color: #2b2a33;
       color: #fff;
     }

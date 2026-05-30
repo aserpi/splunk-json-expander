@@ -114,27 +114,23 @@
   };
 
   // Fetch config and initialize
-  const { autoExpand = false, expansionLevel = 3 } = await api.storage.sync.get(
-    ["autoExpand", "expansionLevel"],
-  );
+  const { expansionLevel = 3 } = await api.storage.sync.get(["expansionLevel"]);
 
   const maxLevel = Number(expansionLevel ?? 3);
   const effectiveMaxLevel =
     Number.isNaN(maxLevel) || maxLevel === 0 ? undefined : maxLevel;
 
-  targetDepth = autoExpand ? effectiveMaxLevel : 0;
+  targetDepth = effectiveMaxLevel;
   isReady = true;
 
   console.info(
-    `[Splunk JSON Expander] Config loaded - autoExpand: ${autoExpand}, targetDepth: ${targetDepth}`,
+    `[Splunk JSON Expander] Config loaded - targetDepth: ${targetDepth}`,
   );
 
   if (pendingManualTrigger) {
     await window.__splunkJsonExpanderForceExpand();
-  } else if (autoExpand) {
-    console.info(
-      "[Splunk JSON Expander] Auto-expand is enabled. Running initial expansion.",
-    );
+  } else {
+    console.info("[Splunk JSON Expander] Running initial expansion.");
     expandAll(targetDepth);
   }
 

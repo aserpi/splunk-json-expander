@@ -17,45 +17,6 @@
           </p>
         </div>
       </div>
-
-      <div class="auto-expander-options">
-        <h3 class="auto-expander-options-title">
-          <span class="auto-expander-options-title-text">
-            Automatic expansion
-          </span>
-        </h3>
-
-        <div class="settings-group">
-          <label for="autoExpand">
-            <input type="checkbox" id="autoExpand" />
-            <span class="bold">Enable</span>
-          </label>
-          <p class="helper-text">
-            Automatically expand JSON results when search results are loaded.
-          </p>
-        </div>
-
-        <div class="settings-group firefox-only">
-          <label class="bold" for="newDomain">Add a domain</label>
-          <div>
-            <button type="button" id="addDomain">+</button>
-            <input
-              type="text"
-              id="newDomain"
-              placeholder="https://splunk.company.com"
-            />
-          </div>
-          <p class="helper-text">Add domains where the extension can run.</p>
-        </div>
-
-        <div class="settings-group firefox-only">
-          <label class="bold">Allowed domains</label>
-          <ul id="domainList"></ul>
-          <p class="helper-text">
-            Unchecking a domain will remove its permission.
-          </p>
-        </div>
-      </div>
     </form>
 
     <script type="module" src="../js/options.js"></script>
