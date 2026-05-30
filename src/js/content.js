@@ -20,24 +20,23 @@
   /**
    * Calculates the logical depth of a JSON expander by counting ancestor toggles.
    */
-  function getDepth(el) {
+  const getDepth = (el) => {
     const parentLevel = el.parentElement?.closest("[data-ext-level]");
-    const depth = parentLevel
+    return parentLevel
       ? parseInt(parentLevel.getAttribute("data-ext-level"), 10) + 1
       : 1;
-    return depth;
-  }
+  };
 
   /**
    * Click all unexpanded `a.jsexpands` links. Returns true if any expander
    * was clicked, false if none remain.
    */
-  function expandOnce(maxDepth) {
+  const expandOnce = (maxDepth) => {
     const expanders = document.querySelectorAll(
       "a.jsexpands:not([data-expanded-by-ext])",
     );
-
     const visibleExpanders = [];
+
     for (const el of expanders) {
       // Revert to offsetWidth/Height check as Splunk's dynamic DOM might not play well with checkVisibility
       if (el.offsetHeight > 0 || el.offsetWidth > 0) {
@@ -60,22 +59,19 @@
       item.el.click();
     }
     return true;
-  }
+  };
 
-  function expandAll(maxDepth) {
+  const expandAll = (maxDepth) => {
     let pass = 0;
-    while (expandOnce(maxDepth)) {
-      pass++;
-    }
+    while (expandOnce(maxDepth)) pass++;
 
     if (pass > 0) {
       setTimeout(() => {
-        const overlay = document.querySelector("div.modalize-table-overlay");
-        if (overlay) overlay.click();
+        document.querySelector("div.modalize-table-overlay")?.click();
       }, 2);
     }
     return pass;
-  }
+  };
 
   // Placeholder and state to handle clicks during async storage fetch
   let isReady = false;
@@ -96,31 +92,25 @@
       "expansionLevel",
     ]);
     const newMaxLevel = Number(expansionLevel ?? 3);
-    const step =
+    targetDepth =
       Number.isNaN(newMaxLevel) || newMaxLevel === 0 ? undefined : newMaxLevel;
 
-    if (step === undefined) {
-      targetDepth = undefined;
-    } else if (targetDepth !== undefined) {
-      targetDepth += step;
-    }
-
-    const skippedElements = document.querySelectorAll(
-      'a.jsexpands[data-expanded-by-ext="skipped"]',
-    );
-    skippedElements.forEach((el) => el.removeAttribute("data-expanded-by-ext"));
+    document
+      .querySelectorAll('a.jsexpands[data-expanded-by-ext="skipped"]')
+      .forEach((el) => {
+        el.removeAttribute("data-expanded-by-ext");
+        if (el.parentElement) {
+          el.parentElement.setAttribute("data-ext-level", "0");
+        }
+      });
 
     expandAll(targetDepth);
   };
 
   // Fetch config and initialize
   const { expansionLevel = 3 } = await api.storage.sync.get(["expansionLevel"]);
-
   const maxLevel = Number(expansionLevel ?? 3);
-  const effectiveMaxLevel =
-    Number.isNaN(maxLevel) || maxLevel === 0 ? undefined : maxLevel;
-
-  targetDepth = effectiveMaxLevel;
+  targetDepth = Number.isNaN(maxLevel) || maxLevel === 0 ? undefined : maxLevel;
   isReady = true;
 
   console.info(
@@ -138,9 +128,7 @@
     "[Splunk JSON Expander] Setting up MutationObserver to handle async rendering.",
   );
   let mutationTimeout = null;
-  const observer = new MutationObserver((mutations) => {
-    if (targetDepth === 0) return;
-
+  new MutationObserver((mutations) => {
     let hasNewExpanders = false;
     for (const mut of mutations) {
       if (mut.type !== "childList" || !mut.addedNodes.length) continue;
@@ -159,11 +147,7 @@
 
     if (hasNewExpanders) {
       if (mutationTimeout) cancelAnimationFrame(mutationTimeout);
-      mutationTimeout = requestAnimationFrame(() => {
-        expandAll(targetDepth);
-      });
+      mutationTimeout = requestAnimationFrame(() => expandAll(targetDepth));
     }
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
+  }).observe(document.body, { childList: true, subtree: true });
 })();
