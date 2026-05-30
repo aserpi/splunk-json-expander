@@ -28,8 +28,8 @@
   };
 
   /**
-   * Click all unexpanded `a.jsexpands` links. Returns true if any expander
-   * was clicked, false if none remain.
+   * Click all unexpanded `a.jsexpands` links.
+   * Returns true if any expander was clicked, false if none remain.
    */
   const expandOnce = (maxDepth) => {
     const expanders = document.querySelectorAll(
@@ -84,6 +84,43 @@
     return isNaN(num) ? 3 : Math.max(1, num);
   };
 
+  const getSearchId = () => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("sid") || window.location.pathname;
+  };
+
+  let manualTriggerSearchId = null;
+  const observer = new MutationObserver((mutations) => {
+    if (isManualTrigger && manualTriggerSearchId !== getSearchId()) {
+      observer.disconnect();
+      console.info(
+        "[Splunk JSON Expander] Observer disconnected (new search detected).",
+      );
+      return;
+    }
+
+    const hasNewExpanders = mutations.some(
+      (mut) =>
+        mut.type === "childList" &&
+        Array.from(mut.addedNodes).some(
+          (node) =>
+            node.nodeType === Node.ELEMENT_NODE &&
+            (node.matches("a.jsexpands") || node.querySelector("a.jsexpands")),
+        ),
+    );
+
+    if (hasNewExpanders) {
+      expandAll(targetDepth);
+    }
+  });
+
+  if (!isManualTrigger) {
+    console.info(
+      "[Splunk JSON Expander] Setting up MutationObserver (auto-expand mode).",
+    );
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
   window.__splunkJsonExpanderForceExpand = async () => {
     if (!isReady) {
       pendingManualTrigger = true;
@@ -93,6 +130,8 @@
     console.info(
       "[Splunk JSON Expander] Manual expansion triggered via icon click.",
     );
+
+    manualTriggerSearchId = getSearchId();
 
     const { expansionLevel } = await api.storage.sync.get(["expansionLevel"]);
     targetDepth = parseExpansionLevel(expansionLevel);
@@ -105,6 +144,10 @@
           el.parentElement.setAttribute("data-ext-level", "0");
         }
       });
+
+    if (isManualTrigger) {
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
 
     expandAll(targetDepth);
   };
@@ -124,31 +167,4 @@
     console.info("[Splunk JSON Expander] Running initial expansion.");
     expandAll(targetDepth);
   }
-
-  console.info(
-    "[Splunk JSON Expander] Setting up MutationObserver to handle async rendering.",
-  );
-  let mutationTimeout = null;
-  new MutationObserver((mutations) => {
-    let hasNewExpanders = false;
-    for (const mut of mutations) {
-      if (mut.type !== "childList" || !mut.addedNodes.length) continue;
-
-      for (const node of mut.addedNodes) {
-        if (
-          node.nodeType === Node.ELEMENT_NODE &&
-          (node.matches("a.jsexpands") || node.querySelector("a.jsexpands"))
-        ) {
-          hasNewExpanders = true;
-          break;
-        }
-      }
-      if (hasNewExpanders) break;
-    }
-
-    if (hasNewExpanders) {
-      if (mutationTimeout) cancelAnimationFrame(mutationTimeout);
-      mutationTimeout = requestAnimationFrame(() => expandAll(targetDepth));
-    }
-  }).observe(document.body, { childList: true, subtree: true });
 })();
