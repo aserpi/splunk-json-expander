@@ -78,6 +78,12 @@
   let pendingManualTrigger = isManualTrigger;
   let targetDepth = 0;
 
+  const parseExpansionLevel = (val) => {
+    if (val === "" || val === 0) return undefined;
+    const num = parseInt(val, 10);
+    return isNaN(num) ? 3 : Math.max(1, num);
+  };
+
   window.__splunkJsonExpanderForceExpand = async () => {
     if (!isReady) {
       pendingManualTrigger = true;
@@ -88,12 +94,8 @@
       "[Splunk JSON Expander] Manual expansion triggered via icon click.",
     );
 
-    const { expansionLevel = 3 } = await api.storage.sync.get([
-      "expansionLevel",
-    ]);
-    const newMaxLevel = Number(expansionLevel ?? 3);
-    targetDepth =
-      Number.isNaN(newMaxLevel) || newMaxLevel === 0 ? undefined : newMaxLevel;
+    const { expansionLevel } = await api.storage.sync.get(["expansionLevel"]);
+    targetDepth = parseExpansionLevel(expansionLevel);
 
     document
       .querySelectorAll('a.jsexpands[data-expanded-by-ext="skipped"]')
@@ -108,9 +110,8 @@
   };
 
   // Fetch config and initialize
-  const { expansionLevel = 3 } = await api.storage.sync.get(["expansionLevel"]);
-  const maxLevel = Number(expansionLevel ?? 3);
-  targetDepth = Number.isNaN(maxLevel) || maxLevel === 0 ? undefined : maxLevel;
+  const result = await api.storage.sync.get(["expansionLevel"]);
+  targetDepth = parseExpansionLevel(result.expansionLevel);
   isReady = true;
 
   console.info(

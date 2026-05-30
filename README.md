@@ -13,7 +13,7 @@ This extension automates the process so you can focus on analysis.
 
 - **Automatic expansion**: When you allow a domain, JSON results expand automatically as soon as they are loaded.
 - **One-click expansion**: Click the extension icon to instantly expand JSON results on any Splunk page without permanently allowing the domain.
-- **Customizable depth**: Configure how many levels deep the JSON should be expanded (defaults to 3, 0 for all levels).
+- **Customizable depth**: Configure how many levels deep the JSON should be expanded (defaults to 3, leave empty for all levels).
 - **Cross-browser**: Built with Manifest V3 for modern Chrome and Firefox compatibility.
 
 ## Usage
@@ -57,7 +57,7 @@ You can also click the extension icon again to expand the logs to twice the conf
 You can customize the extension's expansion depth in the options page:
 
 1. Open the extension's option page:
-2. Set the number of nested levels to expand in each pass (use `0` to expand all levels).
+2. Set the maximum number of nested levels to expand in each pass (leave emtpy to expand all levels).
 
 ## Development
 
