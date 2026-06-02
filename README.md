@@ -29,7 +29,7 @@ If you use Splunk frequently on a specific domain, you can allow the extension t
    - If you pinned the extension, right-click the extension icon.
    - If you did not pin the extension, click on the three dots on the right of the icon.
 3. Click **Always run on this domain**. The extension will now automatically expand JSON logs whenever you visit this site.<br>
-   To disable, open the context menu again and select **✔ Always run on this domain**.
+   To disable, open the context menu again and select **✓ Always run on this domain**.
 
 #### Firefox
 
