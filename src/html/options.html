@@ -8,13 +8,23 @@
     <form>
       <div class="general-options">
         <div class="settings-group">
-          <label for="maxLevel">
-            <span class="bold">Max expansion level</span>
-            <input type="number" id="maxLevel" min="1" />
+          <label for="autoExpansionLevel">
+            <span class="bold">Auto-expansion level</span>
+            <input type="number" id="autoExpansionLevel" min="1" />
           </label>
           <p class="helper-text">
-            The maximum number of nested levels to be expanded in each pass
-            (leave empty for all).
+            The number of nested levels to be expanded automatically on page
+            load (leave empty for all).
+          </p>
+        </div>
+        <div class="settings-group">
+          <label for="manualExpansionLevel">
+            <span class="bold">Manual expansion level</span>
+            <input type="number" id="manualExpansionLevel" min="1" />
+          </label>
+          <p class="helper-text">
+            The number of nested levels to be expanded when clicking the
+            extension icon (leave empty for all).
           </p>
         </div>
       </div>

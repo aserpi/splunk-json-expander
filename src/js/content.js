@@ -73,10 +73,11 @@
     return pass;
   };
 
+  let currentTargetDepth = 0;
+  let initialAutoLevel = undefined;
   // Placeholder and state to handle clicks during async storage fetch
   let isReady = false;
   let pendingManualTrigger = isManualTrigger;
-  let targetDepth = 0;
 
   const parseExpansionLevel = (val) => {
     if (val === "" || val === 0) return undefined;
@@ -89,14 +90,23 @@
     return params.get("sid") || window.location.pathname;
   };
 
-  let manualTriggerSearchId = null;
+  let currentSearchId = getSearchId();
   const observer = new MutationObserver((mutations) => {
-    if (isManualTrigger && manualTriggerSearchId !== getSearchId()) {
-      observer.disconnect();
-      console.info(
-        "[Splunk JSON Expander] Observer disconnected (new search detected).",
-      );
-      return;
+    const newSearchId = getSearchId();
+    if (currentSearchId !== newSearchId) {
+      currentSearchId = newSearchId;
+      if (!isManualTrigger) {
+        currentTargetDepth = initialAutoLevel;
+        console.info(
+          "[Splunk JSON Expander] New search detected. Resetting to autoExpansionLevel.",
+        );
+      } else {
+        observer.disconnect();
+        console.info(
+          "[Splunk JSON Expander] Observer disconnected (new search detected).",
+        );
+        return;
+      }
     }
 
     const hasNewExpanders = mutations.some(
@@ -110,7 +120,7 @@
     );
 
     if (hasNewExpanders) {
-      expandAll(targetDepth);
+      expandAll(currentTargetDepth);
     }
   });
 
@@ -131,40 +141,51 @@
       "[Splunk JSON Expander] Manual expansion triggered via icon click.",
     );
 
-    manualTriggerSearchId = getSearchId();
+    currentSearchId = getSearchId();
 
-    const { expansionLevel } = await api.storage.sync.get(["expansionLevel"]);
-    targetDepth = parseExpansionLevel(expansionLevel);
+    const result = await api.storage.sync.get(["manualExpansionLevel"]);
+    const manualLevel = parseExpansionLevel(result.manualExpansionLevel ?? 0);
 
+    if (manualLevel === undefined || currentTargetDepth === undefined) {
+      currentTargetDepth = undefined;
+    } else {
+      currentTargetDepth += manualLevel;
+    }
+
+    // Un-skip previously skipped nodes so they can be evaluated against the new currentTargetDepth
     document
       .querySelectorAll('a.jsexpands[data-expanded-by-ext="skipped"]')
       .forEach((el) => {
         el.removeAttribute("data-expanded-by-ext");
-        if (el.parentElement) {
-          el.parentElement.setAttribute("data-ext-level", "0");
-        }
       });
 
     if (isManualTrigger) {
       observer.observe(document.body, { childList: true, subtree: true });
     }
 
-    expandAll(targetDepth);
+    expandAll(currentTargetDepth);
   };
 
   // Fetch config and initialize
-  const result = await api.storage.sync.get(["expansionLevel"]);
-  targetDepth = parseExpansionLevel(result.expansionLevel);
+  const result = await api.storage.sync.get(["autoExpansionLevel"]);
+  initialAutoLevel = parseExpansionLevel(result.autoExpansionLevel ?? 3);
+
+  if (!isManualTrigger) {
+    currentTargetDepth = initialAutoLevel;
+  } else {
+    currentTargetDepth = 0;
+  }
+
   isReady = true;
 
   console.info(
-    `[Splunk JSON Expander] Config loaded - targetDepth: ${targetDepth}`,
+    `[Splunk JSON Expander] Config loaded - currentTargetDepth: ${currentTargetDepth}`,
   );
 
   if (pendingManualTrigger) {
     await window.__splunkJsonExpanderForceExpand();
   } else {
     console.info("[Splunk JSON Expander] Running initial expansion.");
-    expandAll(targetDepth);
+    expandAll(currentTargetDepth);
   }
 })();
