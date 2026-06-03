@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0 2026-06-04
+
+Independently configure how many levels deep the JSON should be expanded for automatic and manual triggers.
+
 ## 2.0.0 - 2026-05-30
 
 Improvements:
